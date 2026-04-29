@@ -1,0 +1,26 @@
+#include <string.h>
+#include <stdlib.h>
+
+char* longestCommonPrefix(char** strs, int strsSize) {
+    if (strsSize == 0) return "";
+    
+    // Start by assuming the first string is the common prefix
+    char* prefix = strs[0];
+    int len = strlen(prefix);
+
+    for (int i = 1; i < strsSize; i++) {
+        // While the current string doesn't start with the prefix
+        // or the prefix is longer than the current string
+        while (strncmp(strs[i], prefix, len) != 0) {
+            len--; // Shorten the prefix from the end
+            if (len == 0) return "";
+        }
+    }
+
+    // Allocate memory for the final prefix and null-terminate it
+    char* result = (char*)malloc((len + 1) * sizeof(char));
+    strncpy(result, prefix, len);
+    result[len] = '\0';
+
+    return result;
+}
