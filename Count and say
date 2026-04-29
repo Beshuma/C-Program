@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* countAndSay(int n) {
+    if (n <= 0) return "";
+    
+    // Initial sequence for n = 1
+    char* current = (char*)malloc(2 * sizeof(char));
+    strcpy(current, "1");
+
+    for (int i = 2; i <= n; i++) {
+        // Estimate buffer size for the next sequence
+        // (Roughly double the size, though max size for n=30 is ~4500)
+        char* next = (char*)malloc(strlen(current) * 3 * sizeof(char));
+        int nextIdx = 0;
+        int len = strlen(current);
+
+        for (int j = 0; j < len; j++) {
+            int count = 1;
+            // Count consecutive identical characters
+            while (j + 1 < len && current[j] == current[j + 1]) {
+                count++;
+                j++;
+            }
+            
+            // Append count and then the character
+            // Convert count to char (since count will be small, < 10)
+            next[nextIdx++] = count + '0';
+            next[nextIdx++] = current[j];
+        }
+        next[nextIdx] = '\0';
+
+        free(current); // Free the old sequence
+        current = next; // Move to the new sequence
+    }
+
+    return current;
+}
