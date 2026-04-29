@@ -1,0 +1,27 @@
+#include <stdlib.h>
+#include <string.h>
+
+char* convert(char* s, int numRows) {
+    int n = strlen(s);
+    
+    // If numRows is 1 or greater than string length, no zigzagging happens
+    if (numRows == 1 || numRows >= n) return s;
+
+    char* result = (char*)malloc((n + 1) * sizeof(char));
+    int count = 0;
+    int cycleLen = 2 * numRows - 2;
+
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j + i < n; j += cycleLen) {
+            // First character in the "V" shape leg
+            result[count++] = s[j + i];
+            
+            // If we are in the middle rows, there's a second character in the cycle
+            if (i != 0 && i != numRows - 1 && j + cycleLen - i < n) {
+                result[count++] = s[j + cycleLen - i];
+            }
+        }
+    }
+    result[count] = '\0';
+    return result;
+}
