@@ -1,0 +1,19 @@
+#include <stdbool.h>
+
+bool isPalindrome(int x) {
+    // Negative numbers are not palindromes.
+    // Also, if the last digit is 0, the first digit must be 0 (only happens with 0 itself).
+    if (x < 0 || (x % 10 == 0 && x != 0)) {
+        return false;
+    }
+
+    int revertedNumber = 0;
+    while (x > revertedNumber) {
+        revertedNumber = revertedNumber * 10 + x % 10;
+        x /= 10;
+    }
+
+    // For even length: x == revertedNumber
+    // For odd length: x == revertedNumber / 10 (middle digit doesn't matter)
+    return x == revertedNumber || x == revertedNumber / 10;
+}
