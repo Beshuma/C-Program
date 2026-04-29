@@ -1,0 +1,16 @@
+int removeElement(int* nums, int numsSize, int val) {
+    // 'k' tracks the position for elements we want to keep
+    int k = 0;
+
+    for (int i = 0; i < numsSize; i++) {
+        // If the current element is NOT the value to be removed
+        if (nums[i] != val) {
+            // Move it to the front of the array at index k
+            nums[k] = nums[i];
+            k++;
+        }
+    }
+
+    // k is the count of elements not equal to val
+    return k;
+}
